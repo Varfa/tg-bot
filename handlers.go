@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// Получить все бренды
+// Получаем все бренды
 func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
 	rows, err := db.Query("SELECT id, name FROM car_brands ORDER BY name")
 	if err != nil {
@@ -30,7 +30,7 @@ func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(brands)
 }
 
-// Получить модели по бренду
+// Получаем модели по бренду
 func GetModelsHandler(w http.ResponseWriter, r *http.Request) {
 	brandIDStr := r.URL.Query().Get("brandId")
 	brandID, err := strconv.Atoi(brandIDStr)
