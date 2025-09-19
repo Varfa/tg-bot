@@ -16,7 +16,7 @@ func init() {
 	}
 }
 
-// Проверка логина и установка cookie
+// Проверка логина и установка cookie (тут надо еще разобраться)
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
@@ -42,13 +42,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Проверка cookie при доступе к dashboard
+// Проверка cookie при доступе к dashboard (и тут разобраться)
 func Authenticated(r *http.Request) bool {
 	cookie, err := r.Cookie("logged_in")
 	return err == nil && cookie.Value == "true"
 }
 
-// Logout
+// Logout (Выход)
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:   "logged_in",

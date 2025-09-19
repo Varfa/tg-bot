@@ -14,7 +14,7 @@ var db *sql.DB
 
 // InitDB инициализирует подключение к PostgreSQL
 func InitDB() {
-	// Загружаем .env
+	// Загрузка .env
 	_ = godotenv.Load()
 
 	host := os.Getenv("DB_HOST")
