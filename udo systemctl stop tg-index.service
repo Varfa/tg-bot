@@ -1,0 +1,14 @@
+[0;1;32m●[0m tg-index.service - Go Telegram Bot Index Server
+     Loaded: loaded (/etc/systemd/system/tg-index.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Fri 2025-09-19 13:04:12 UTC; 68ms ago
+   Main PID: 7916 (tg-index)
+      Tasks: 3 (limit: 1042)
+     Memory: 1.0M
+     CGroup: /system.slice/tg-index.service
+             └─7916 /root/tg-bot/Index/tg-index
+
+Sep 19 13:04:12 arbata systemd[1]: tg-index.service: Succeeded.
+Sep 19 13:04:12 arbata systemd[1]: Stopped Go Telegram Bot Index Server.
+Sep 19 13:04:12 arbata systemd[1]: Started Go Telegram Bot Index Server.
+Sep 19 13:04:12 arbata tg-index[7916]: 2025/09/19 13:04:12 Подключение к БД успешно
+Sep 19 13:04:12 arbata tg-index[7916]: 2025/09/19 13:04:12 Сервер запущен на 0.0.0.0:8080

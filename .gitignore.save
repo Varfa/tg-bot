@@ -1,0 +1,12 @@
+# Секреты
+.env
+
+# Go binaries
+*.exe
+*.out
+server
+
+# IDE и временные файлы
+.vscode/
+*.log
+*.swp
