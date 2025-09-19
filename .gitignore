@@ -10,3 +10,7 @@ server
 .vscode/
 *.log
 *.swp
+*.key
+*.pem
+server
+
