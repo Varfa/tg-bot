@@ -6,8 +6,13 @@ import (
 	"strconv"
 )
 
-// Получаем все бренды
+// Получаем бренды (только для авторизованных)
 func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
+	if !Authenticated(r) {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
 	rows, err := db.Query("SELECT id, name FROM car_brands ORDER BY name")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -30,8 +35,13 @@ func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(brands)
 }
 
-// Получаем модели по бренду
+// Получаем модели по бренду (только для авторизованных)
 func GetModelsHandler(w http.ResponseWriter, r *http.Request) {
+	if !Authenticated(r) {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
 	brandIDStr := r.URL.Query().Get("brandId")
 	brandID, err := strconv.Atoi(brandIDStr)
 	if err != nil || brandID == 0 {

@@ -8,11 +8,20 @@ import (
 func main() {
 	InitDB()
 
+	// Приватные API — проверка авторизации внутри handler
 	http.HandleFunc("/get-brands", GetBrandsHandler)
 	http.HandleFunc("/get-models", GetModelsHandler)
 
-	// Отдаём дашборд
+	// Логин и логаут
+	http.HandleFunc("/login", LoginHandler)
+	http.HandleFunc("/logout", LogoutHandler)
+
+	// Дашборд — только для авторизованных
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if !Authenticated(r) {
+			http.Redirect(w, r, "/login.html", http.StatusSeeOther)
+			return
+		}
 		http.ServeFile(w, r, "dashboard.html")
 	})
 

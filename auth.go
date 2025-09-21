@@ -9,17 +9,16 @@ import (
 )
 
 func init() {
-	// Загружаем .env
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("Ошибка загрузки .env, используем системные переменные")
 	}
 }
 
-// Проверка логина и установка cookie (тут надо еще разобраться)
+// LoginHandler проверяет логин и устанавливает cookie
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
 		return
 	}
 
@@ -36,19 +35,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			Path:  "/",
 		}
 		http.SetCookie(w, &cookie)
-		http.Redirect(w, r, "/dashboard.html", http.StatusSeeOther)
-	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+	} else {
+		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
 	}
 }
 
-// Проверка cookie при доступе к dashboard (и тут разобраться)
+// Проверка cookie при доступе к приватным страницам
 func Authenticated(r *http.Request) bool {
 	cookie, err := r.Cookie("logged_in")
 	return err == nil && cookie.Value == "true"
 }
 
-// Logout (Выход)
+// LogoutHandler — выход
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:   "logged_in",
@@ -57,5 +56,5 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge: -1,
 	}
 	http.SetCookie(w, &cookie)
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/login.html", http.StatusSeeOther)
 }
