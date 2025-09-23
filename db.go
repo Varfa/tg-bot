@@ -12,9 +12,7 @@ import (
 
 var db *sql.DB
 
-// InitDB инициализирует подключение к PostgreSQL
 func InitDB() {
-	// Загрузка .env
 	_ = godotenv.Load()
 
 	host := os.Getenv("DB_HOST")

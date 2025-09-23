@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// Получаем бренды (только для авторизованных)
+// Получение брендов
 func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
 	if !Authenticated(r) {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
@@ -35,7 +35,7 @@ func GetBrandsHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(brands)
 }
 
-// Получаем модели по бренду (только для авторизованных)
+// Получение моделей по бренду
 func GetModelsHandler(w http.ResponseWriter, r *http.Request) {
 	if !Authenticated(r) {
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)

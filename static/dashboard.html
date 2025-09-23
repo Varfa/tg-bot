@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приём автомобиля</title>
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <script src="/static/dashboard.js" defer></script>
+</head>
+<body>
+    <div class="header">
+        <h2>Форма приёма автомобиля</h2>
+        <form id="repairForm">
+            <div class="selectors">
+                <label>Марка:</label>
+                <select id="brandSelect" name="brandId" onchange="loadModels()" required></select>
+                <label>Модель:</label>
+                <select id="modelSelect" name="modelId" required></select>
+            </div>
+            <div class="client-info">
+                <input type="text" id="clientName" name="clientName" placeholder="Имя клиента" required>
+                <input type="text" id="clientPhone" name="clientPhone" placeholder="Телефон клиента" required>
+            </div>
+            <div class="car-info">
+                <input type="text" id="plate" name="plate" placeholder="Гос. номер" required>
+                <input type="text" id="vin" name="vin" placeholder="VIN" required>
+                <input type="text" id="year" name="year" placeholder="Год выпуска" required>
+                <input type="text" id="mileage" name="mileage" placeholder="Пробег" required>
+            </div>
+            <div class="repair-info">
+                <textarea id="problem" name="problem" placeholder="Описание проблемы" required></textarea>
+                <textarea id="mechanicComment" name="mechanicComment" placeholder="Комментарии сервиса"></textarea>
+                <select id="status" name="status" required>
+                    <option value="">Статус ремонта</option>
+                    <option value="in_progress">В работе</option>
+                    <option value="waiting_parts">Ожидает запчасти</option>
+                    <option value="done">Готово</option>
+                </select>
+                <input type="date" id="acceptDate" name="acceptDate">
+                <input type="date" id="releaseDate" name="releaseDate">
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</body>
+</html>

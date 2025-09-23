@@ -1,24 +1,21 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
-func init() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Println("Ошибка загрузки .env, используем системные переменные")
-	}
+// Проверка авторизации
+func Authenticated(r *http.Request) bool {
+	cookie, err := r.Cookie("logged_in")
+	return err == nil && cookie.Value == "true"
 }
 
-// LoginHandler проверяет логин и устанавливает cookie
+// Login
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
+		// Отдаем файл index.html, а не login.html
+		http.ServeFile(w, r, "/root/tg-bot/Index/static/index.html")
 		return
 	}
 
@@ -35,19 +32,16 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			Path:  "/",
 		}
 		http.SetCookie(w, &cookie)
+		// Редирект на корень — там отдаётся dashboard.html для авторизованных
 		http.Redirect(w, r, "/", http.StatusSeeOther)
-	} else {
-		http.Redirect(w, r, "/login.html", http.StatusSeeOther)
+		return
 	}
+
+	// При неправильном логине тоже отдаём страницу входа
+	http.ServeFile(w, r, "/root/tg-bot/Index/static/index.html")
 }
 
-// Проверка cookie при доступе к приватным страницам
-func Authenticated(r *http.Request) bool {
-	cookie, err := r.Cookie("logged_in")
-	return err == nil && cookie.Value == "true"
-}
-
-// LogoutHandler — выход
+// Logout
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:   "logged_in",
@@ -56,5 +50,6 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 		MaxAge: -1,
 	}
 	http.SetCookie(w, &cookie)
-	http.Redirect(w, r, "/login.html", http.StatusSeeOther)
+	// Редирект на страницу входа
+	http.Redirect(w, r, "/static/index.html", http.StatusSeeOther)
 }
